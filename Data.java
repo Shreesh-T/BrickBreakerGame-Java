@@ -1,3 +1,6 @@
+//Stores data in a CSV file along with your name.
+
+
 package brickBreaker;
 
 import java.io.*; 
