@@ -54,13 +54,13 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener
         g.setColor(Color.black);
         g.fillRect(1, 1, 692, 592);
         map.draw((Graphics2D)g);
-        
+        //Border
         g.setColor(Color.blue);
         g.fillRect(0,0,3,592);
         g.fillRect(0,0,692,3);
         g.fillRect(691,0,3,592);
         
-        
+        //Lives
         if(life==2)
         {
         	g.setColor(Color.red);
@@ -95,22 +95,27 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener
             g.fillArc(274, 10, 14, 14, 0, 180);
             g.fillPolygon(new int[] {260, 274, 288}, new int[] {17, 29, 17}, 3);
         }
-        
+        //Display Score
         g.setColor(Color.white);
         g.setFont(new Font("serif", Font.BOLD, 20));
         g.drawString(""+score,590, 30);
+	
+	//Display level
         g.setColor(Color.white);
         g.setFont(new Font("serif", Font.BOLD, 20));
         g.drawString("Level "+level,3, 30);
+	
+	//Player's Bar
         g.setColor((Color.green));
         g.fillRect(playerX,550,100,8);
         
+	//Ball
         g.setColor((Color.yellow));
         g.fillOval(ballposX,ballposY,20,20);
         
         //For Next Level
         if(TotalBricks<=0)
-        {
+        {	
         	if(level<14)
         	{
 	        	play=true;
@@ -123,6 +128,8 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener
 	            g.drawString("Press enter to continue",290, 350);	
 	            k=true;
         	}
+		
+		//All levels cleared
         	else
         	{
         		play=false;
@@ -134,6 +141,13 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener
 	            g.setFont(new Font("serif", Font.BOLD, 20));
 	            g.drawString("Press enter to play again",290, 350);
 	            k=true;
+		    time.stop();
+	            data=new Data();
+	            Input in = new Input();
+	            in.button();
+	            data.x = in.name;
+	            data.score=score;
+	        	data.call();
         	}
         }
         
@@ -161,31 +175,33 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener
 	            data.score=score;
 	        	data.call();
         	}
+		
+		//Life lost
         	else
         	{
-        		
-        		life--;
-				
+        		life--;		
 	            try 
 	            {
 	            	TimeUnit.SECONDS.sleep(2);
-					
-				} 
-	            catch (InterruptedException e) {
+		    } 
+	            catch (InterruptedException e)
+		    {
 									
-				}
+		    }
 	            if(level==1)
 	            	score=0;
 	            else
 	            	score=5*(i2-1)*5;
-        		ballposX=120;
-        		ballposY=350;
-        		balldirX= -1;
-        		balldirY =-2;
-        		playerX=310;
-        		TotalBricks=i2*j2;
-        		map= new MapGenerator(i2,j2);
-        		k=false;
+			
+		//Reset positions
+        	    ballposX=120;
+        	    ballposY=350;
+        	    balldirX= -1;
+        	    balldirY =-2;
+        	    playerX=310;
+        	    TotalBricks=i2*j2;
+        	    map= new MapGenerator(i2,j2);
+        	   k=false;
         	}
         }
         g.dispose();
@@ -200,7 +216,6 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener
     	{	
     		if(new Rectangle(ballposX, ballposY, 20, 20).intersects(new Rectangle(playerX, 550, 100, 8)))
     			balldirY = -balldirY;
-    		
     		A: for(int i = 0; i<map.map.length; i++)
     		{
     			for(int j = 0; j<map.map[0].length; j++)
@@ -291,9 +306,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener
         		playerX = 310;
         		score = 0;
         		TotalBricks=i2*j2;
-        		map= new MapGenerator(i2,j2);
-        		
-        		
+        		map= new MapGenerator(i2,j2);	
         	}
         	//next level
         	else
@@ -309,11 +322,9 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener
         		balldirX= -1;
         		balldirY =-2;
         		playerX=310;
-        		level++;
-        		
+        		level++;	
         		TotalBricks = i2*j2;
-        		map= new MapGenerator(i2,j2);
-        		
+        		map= new MapGenerator(i2,j2);	
         	}
         }
     }
@@ -328,7 +339,4 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener
         play = true;
         playerX-=20;
     }
-    
-   
-   
 }
